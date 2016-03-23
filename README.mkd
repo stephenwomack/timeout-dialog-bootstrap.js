@@ -1,13 +1,13 @@
 timeout-dialog-bootstrap
 ========================
-Forked from [session-timeout.js by rigoneri] (https://github.com/rigoneri/timeout-dialog.js)
+Forked from [session-timeout.js by rigoneri] (https://github.com/rigoneri/timeout-dialog.js) <br>
 The code has been changed to allow the developer to use boostrap and not have to include any jquery-ui libraries. The countdown time has been modified to display minutes and seconds instead of just seconds. 
-
+<br>
 You can easily upgrade from session-timeout.js to session-timeout-bootstrap.js, since all of the options have been kept from session-timeout.js.
 
 ## Description
 After a set amount of idle time, a Bootbox warning dialog is shown to the user with the option to either stay logged in or stay logout. If the logout button is selected, the page is redirected (via a post) to a logout URL. If the stay logged in button is selected, the dialog closes and the session is kept alive. If no option is selected after another set amount of idle time, the page is automatically redirected (via a post) to a set logout URL.
-
+<br>
 Idle time is defined as no http method like post or get being called to the server. Basically, the user staying on the same screen for a set amount of time.
 
 ## Getting Started
