@@ -1,16 +1,108 @@
-timeout-dialog.js
-=================
+timeout-dialog-bootstrap
+========================
+Forked from [session-timeout.js by rigoneri] (https://github.com/rigoneri/timeout-dialog.js)
+The code has been changed to allow the developer to use boostrap and not have to include any jquery-ui libraries. The countdown time has been modified to display minutes and seconds instead of just seconds. 
 
-Timeout-dialog.js is a JQuery plugin that displays a timeout popover after a certain period of time. The timeout dialog should be used whenever you want to display to the user that the logged in session is about to expire. It creates a light box with a countdown and options to stay signed in or sign out.
+You can easily upgrade from session-timeout.js to session-timeout-bootstrap.js, since all of the options have been kept from session-timeout.js.
 
-Example and Documentation
--------------------------
+## Description
+After a set amount of idle time, a Bootbox warning dialog is shown to the user with the option to either stay logged in or stay logout. If the logout button is selected, the page is redirected (via a post) to a logout URL. If the stay logged in button is selected, the dialog closes and the session is kept alive. If no option is selected after another set amount of idle time, the page is automatically redirected (via a post) to a set logout URL.
 
-[timeout-dialog.js examples](http://rigoneri.github.com/timeout-dialog.js)
+Idle time is defined as no http method like post or get being called to the server. Basically, the user staying on the same screen for a set amount of time.
+
+## Getting Started
+
+1. Download or git clone.
+2. Install dependencies: jQuery >= v1.11.3, Bootstrap JS and CSS >= Bootstrap v3.3.6, and bootbox.js >= v4.4.0.
+3. Include `timeout-dialog-bootstrap.js` or the minified version `timeout-dialog-bootstrap.min.js`
+4. Call `$.timeoutDialog();` on document ready. See available options below or take a look at the examples.
+
+## Documentation
+### Options
+**countdown**
+
+Type: `Integer`
+
+Default: `1200 (seconds)`
+Time in seconds to start the dialog and countdown timer.
 
 
-Credit
-------
 
-timeout-dialog.js was developed by [@rigoneri]
+**keep_alive_button_text**
 
+Type: `String`
+
+Default: 'Yes, Keep me signed in'
+The text displayed on the stay signed in button.
+
+
+
+**keep_alive_url**
+
+Type: `String`
+
+Default: `'/keep-alive'`
+The url to call a get to one the user click stay signed in button.
+
+
+
+**logout_redirect_url**
+
+Type: `String`
+
+Default: `'/'`
+The url to send the user (via a get) to after a successful logout.
+
+
+
+**logout_url**
+
+Type: `String`
+
+Default: `null`
+The url to post to to log the user out. If this value is null then it just redirects the user (via get) to logout_redirect_url url.
+
+
+
+**message**
+
+Type: `String`
+
+Default: `'You will be logged out in {0}.'`
+The text to display in the bootbox header. The {0} will be substituted with ## minutes ## seconds. Example, You will be logged out in 2 minutes and 34 seconds.
+
+
+
+**question**
+
+Type: `String`
+
+Default: `'Do you want to stay signed in?'`
+The text that will appear in the bootbox window asking the user if he/she would like to stay signed in.
+
+
+
+**restart_on_yes**
+
+Type: `Boolean`
+
+Default: `true`
+Flag to indicate if the timpout clock shoudl be reset to allow the dialog to reappear after idle time.
+
+
+
+**sign_out_button_text**
+
+Type: `String`
+
+Default: `'No, Sign me out'`
+The text that will appear on the logout button.
+
+
+
+**Title**
+
+Type: `String`
+
+Default: `'Your session is about to expire!'`
+The text that will appear in the bootbox title section.
