@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>timeout-dialog-bootstrap.js example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Bootstrap-session-timeout</h1>
+        <h2>Basic Usage</h2>
+        <hr>
+        <p>Shows the warning dialog after 5 seconds. If user takes no action, browser is redirected to redirUrl.</p>
+
+        <pre>
+            $(document).ready(function () { 
+                $.timeoutDialog({
+                    timeout: 125 // seconds
+                    ,countdown: 120 // seconds
+                    ,keep_alive_url: ''
+                    ,logout_redirect_url: 'https://github.com/stephenwomack/timeout-dialog-bootstrap.js'
+                    ,restart_on_yes: false
+                });
+            });
+        </pre>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="bootbox.min.js" type="text/javascript"></script>
+    <script src="../dist/timeout-dialog-bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () { 
+                $.timeoutDialog({
+                    timeout: 125 // seconds
+                    ,countdown: 120 // seconds
+                    ,keep_alive_url: ''
+                    ,logout_redirect_url: 'https://github.com/stephenwomack/timeout-dialog-bootstrap.js'
+                    ,restart_on_yes: false
+                });
+            });
+    </script>
+</body>
+</html>

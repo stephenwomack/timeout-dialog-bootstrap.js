@@ -1,7 +1,9 @@
 /*
- * timeout-dialog.js v1.0.1, 01-03-2012
+ * timeout-dialog-bootstrap.js v1.0.0, 03-21-2016
  * 
- * @author: Rodrigo Neri (@rigoneri)
+ * Copyright for portions of timeout-dialog-bootstrap.js are held by Rodrigo Neri (@rigoneri) 
+ * as part of project timeout-dialog.js. All other copyright for project 
+ * timeout-dialog-bootstrap.js are held by Stephen Womack, 2016.
  * 
  * (The MIT License)
  * 
@@ -42,97 +44,100 @@ String.prototype.format = function() {
 };
 
 !function($) {
-  
-  var $globalTimeoutSettings = {}, 
-      sessionTimeoutHandle;
-  
   $.timeoutDialog = function(options) {
 
     var settings = {
       timeout: 1200,
       countdown: 60,
       title : 'Your session is about to expire!',
-      message : 'You will be logged out in {0} seconds.',
+      message : 'You will be logged out in {0}.',
       question: 'Do you want to stay signed in?',
       keep_alive_button_text: 'Yes, Keep me signed in',
       sign_out_button_text: 'No, Sign me out',
       keep_alive_url: '/keep-alive',
       logout_url: null,
       logout_redirect_url: '/',
-      restart_on_yes: true,
-      dialog_width: 350
-    };
-    
-    $.extend($globalTimeoutSettings, options);
-    options = $.extend(settings, $globalTimeoutSettings);
-    
+      restart_on_yes: true
+    }  ;  
+
+    $.extend(settings, options);
+
     var TimeoutDialog = {
       init: function () {
         this.setupDialogTimer();
       }, 
-
+      
       setupDialogTimer: function() {
         var self = this;
-        window.clearTimeout(sessionTimeoutHandle);
-        sessionTimeoutHandle = window.setTimeout(function() {
+        window.setTimeout(function() {
            self.setupDialog();
         }, (settings.timeout - settings.countdown) * 1000);
       },
 
+      // Sets up the bootbox session timeout window.
       setupDialog: function() {
         var self = this;
         self.destroyDialog();
-
-        $('<div id="timeout-dialog">' +
-            '<p id="timeout-message">' + settings.message.format('<span id="timeout-countdown">' + settings.countdown + '</span>') + '</p>' + 
-            '<p id="timeout-question">' + settings.question + '</p>' +
-          '</div>')
-        .appendTo('body')
-        .dialog({
-          modal: true,
-          width: settings.dialog_width,
-          minHeight: 'auto',
-          zIndex: 10000,
-          closeOnEscape: false,
-          draggable: false,
-          resizable: false,
-          dialogClass: 'timeout-dialog',
-          title: settings.title,
-          buttons : {
-            'keep-alive-button' : { 
-              text: settings.keep_alive_button_text,
-              id: "timeout-keep-signin-btn",
-              click: function() {
-                self.keepAlive();
-              }
-            },
-            'sign-out-button' : {
-              text: settings.sign_out_button_text,
-              id: "timeout-sign-out-button",
-              click: function() {
-                self.signOut(true);
+        
+        bootbox.dialog({
+            closeButton: false,
+            message: settings.message.format(self.getTimeString(settings.countdown)) + '<br />' + settings.question,
+            title: settings.title,
+            buttons: {
+              stayLoggedIn: {
+                label: settings.keep_alive_button_text,
+                className: "btn-primary",
+                callback: function() {
+                  self.keepAlive();
+                }
+              },
+              signOut: {
+                label: settings.sign_out_button_text,
+                className: 'btn-main',
+                callback: function() {
+                  self.signOut(true);
+                }
               }
             }
-          }
         });
 
         self.startCountdown();
       },
 
+      // Destroy's the bootbox window.
       destroyDialog: function() {
         if ($("#timeout-dialog").length) {
           $(this).dialog("close");
           $('#timeout-dialog').remove();
         }
       },
-
+      
+      // Gets the minutes and seconds string to display in the countdown.
+      getTimeString: function(time) {
+          var minutes = Math.floor(time / 60);
+          var seconds = time - minutes * 60;
+          var returnString = '';
+          
+          returnString = '<span id="timeout-countdown">';
+          
+          if(minutes > 0)
+          {
+              returnString += minutes + ' minutes ';
+          }
+          
+          returnString += seconds + ' seconds </span>';
+          
+          return returnString;
+      },
+      
+      // Start the countdown timer and change it as it runs every second.
       startCountdown: function() {
         var self = this,
             counter = settings.countdown;
 
         this.countdown = window.setInterval(function() {
           counter -= 1;
-          $("#timeout-countdown").html(counter);
+          $("#timeout-countdown").html(self.getTimeString(counter));
 
           if (counter <= 0) {
             window.clearInterval(self.countdown);
@@ -142,37 +147,47 @@ String.prototype.format = function() {
         }, 1000);
       },
 
+      // Function that keeps the users session active.
       keepAlive: function() {
         var self = this;
         this.destroyDialog();
         window.clearInterval(this.countdown);
-
+        
         $.get(settings.keep_alive_url, function(data) {
-          if (data == "OK") {
+          if (data === "OK") {
             if (settings.restart_on_yes) {
               self.setupDialogTimer();
             }
           }
           else {
+            // they must already be timed out. Redirect them.
             self.signOut(false);
           }
+        }).fail(function() {
+            // If the call fails redirect them anyways.
+            self.signOut(false);
         });
       },
 
+      // Function used to sign the user out.
       signOut: function(is_forced) {
         var self = this;
         this.destroyDialog();
 
-        if (settings.logout_url != null) {
+        if (settings.logout_url !== null) {
+            
             $.post(settings.logout_url, function(data){
                 self.redirectLogout(is_forced);
+            }).fail(function(data){
+                console.log(data);
             });
         }
         else {
             self.redirectLogout(is_forced);
         }
       }, 
-
+      
+      // Redirects the user to the passed in url.
       redirectLogout: function(is_forced){
         var target = settings.logout_redirect_url + '?next=' + encodeURIComponent(window.location.pathname + window.location.search);
         if (!is_forced)
@@ -184,4 +199,3 @@ String.prototype.format = function() {
     TimeoutDialog.init();
   };
 }(window.jQuery);
-
