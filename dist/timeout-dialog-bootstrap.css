@@ -1,0 +1,8 @@
+.session-timout-warning .modal-body
+{
+    background-image: url(../images/timeout-icon.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    padding-left:80px;
+    margin:20px;
+}

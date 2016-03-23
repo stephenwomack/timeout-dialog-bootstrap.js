@@ -83,6 +83,7 @@ String.prototype.format = function() {
             closeButton: false,
             message: settings.message.format(self.getTimeString(settings.countdown)) + '<br />' + settings.question,
             title: settings.title,
+            className: "session-timout-warning",
             buttons: {
               stayLoggedIn: {
                 label: settings.keep_alive_button_text,
@@ -125,7 +126,7 @@ String.prototype.format = function() {
               returnString += minutes + ' minutes ';
           }
           
-          returnString += seconds + ' seconds </span>';
+          returnString += seconds + ' seconds</span>';
           
           return returnString;
       },
@@ -163,10 +164,7 @@ String.prototype.format = function() {
             // they must already be timed out. Redirect them.
             self.signOut(false);
           }
-        }).fail(function() {
-            // If the call fails redirect them anyways.
-            self.signOut(false);
-        });
+        })
       },
 
       // Function used to sign the user out.
