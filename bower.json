@@ -1,0 +1,23 @@
+{
+  "name": "timeout-dialog-bootstrap.js",
+  "homepage": "https://github.com/stephenwomack/timeout-dialog-bootstrap.js",
+  "authors": [
+    "rigoneri (https://github.com/rigoneri)",
+    "simschla (https://github.com/simschla)",
+    "Stephen Womack (http://stephenwomack.com)"
+  ],
+  "description" : "After a set amount of idle time, a Bootbox warning dialog is shown to the user with the option to either stay logged in or stay logout. If the logout button is selected, the page is redirected (via a post) to a logout URL. If the stay logged in button is selected, the dialog closes and the session is kept alive. If no option is selected after another set amount of idle time, the page is automatically redirected (via a post) to a set logout URL.",
+  "main": "timeout-dialog-bootstrap.js",
+  "modelType": [],
+  "license": "MPL-2.0",
+  "ignore": [
+    "examples",
+    "**/.*"
+  ],
+  "dependencies": {
+    "jquery": "^1.11.3",
+    "bootstrap": "^3.3.6",
+    "bootbox": "^4.4.0"
+  }
+
+}
