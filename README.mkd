@@ -1,3 +1,5 @@
+[![Bower](https://img.shields.io/bower/v/timeout-dialog-bootstrap.svg?style=flat-square)]()
+
 timeout-dialog-bootstrap
 ========================
 Forked from [session-timeout.js by rigoneri] (https://github.com/rigoneri/timeout-dialog.js) <br>
@@ -11,12 +13,17 @@ After a set amount of idle time, a Bootbox warning dialog is shown to the user w
 Idle time is defined as no http method like post or get being called to the server. Basically, the user staying on the same screen for a set amount of time.
 
 ## Getting Started
-
+###Manuel
 1. Download or git clone.
 2. Install dependencies: jQuery >= v1.11.3, Bootstrap JS and CSS >= Bootstrap v3.3.6, and bootbox.js >= v4.4.0.
 3. Include `timeout-dialog-bootstrap.css`.
 3. Include `timeout-dialog-bootstrap.js` or the minified version `timeout-dialog-bootstrap.min.js`.
 4. Call `$.timeoutDialog();` on document ready. See available options below or take a look at the examples.
+
+###Bower
+```bash
+Bower install timeout-dialog-bootstrap
+```
 
 ## Documentation
 ### Options
