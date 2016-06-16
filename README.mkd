@@ -23,7 +23,11 @@ Idle time is defined as no http method like post or get being called to the serv
 
 ###Bower
 ```bash
-Bower install timeout-dialog-bootstrap
+bower install timeout-dialog-bootstrap
+```
+###NPM
+```bash
+npm install timeout-dialog-bootstrap
 ```
 
 ## Documentation
